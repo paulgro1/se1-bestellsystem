@@ -33,6 +33,9 @@ final class OutputProcessor implements Components.OutputProcessor {
 		StringBuffer sbAllOrders = new StringBuffer("-------------");
 		StringBuffer sbLineItem = new StringBuffer();
 
+		int rateIndex = 1;
+		long vat = 0;
+
 		long sum = 0;
 		for (Order order : orders) {
 
@@ -42,6 +45,9 @@ final class OutputProcessor implements Components.OutputProcessor {
 			for (OrderItem oi : order.getItems()) {
 
 				orderSum += oi.getArticle().getUnitPrice() * oi.getUnitsOrdered();
+				// MwSt.:
+				// vat += orderProcessor.vat(oi.getArticle().getUnitPrice(), rateIndex) *
+				// oi.getUnitsOrdered();
 				int x = oi.getUnitsOrdered();
 				orderedItems += ", " + x + "x " + oi.getDescription();
 				orderedItems = orderedItems.replaceAll("^,", "");
@@ -55,6 +61,9 @@ final class OutputProcessor implements Components.OutputProcessor {
 					fmtPrice(orderSum, "EUR", 14), printLineWidth);
 			sbAllOrders.append("\n");
 			sbAllOrders.append(sbLineItem);
+
+			// MwSt.:
+			vat += orderProcessor.vat(orderSum, rateIndex);
 		}
 
 		String fmtPriceTotal = pad(fmtPrice(sum, "", " EUR"), 14, true);
@@ -62,7 +71,17 @@ final class OutputProcessor implements Components.OutputProcessor {
 		sbAllOrders.append("\n").append(fmtLine("-------------", "-------------", printLineWidth)).append("\n")
 				.append(fmtLine("Gesamtwert aller Bestellungen:", fmtPriceTotal, printLineWidth));
 
-		System.out.println(sbAllOrders.toString());
+		if (rateIndex == 1 && printVAT == true) {
+			sbAllOrders.append("\n").append(fmtLine("Im Gesamtbetrag enthaltene Mehrwertsteuer (19%):",
+					fmtPrice(vat, "EUR", 14), printLineWidth));
+			System.out.println(sbAllOrders.toString());
+		} else if (rateIndex == 2 && printVAT == true) {
+			sbAllOrders.append("\n").append(fmtLine("Im Gesamtbetrag enthaltene Mehrwertsteuer (7%):",
+					fmtPrice(vat, "EUR", 14), printLineWidth));
+			System.out.println(sbAllOrders.toString());
+		} else
+
+			System.out.println(sbAllOrders.toString());
 	}
 
 	@Override

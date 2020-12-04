@@ -33,11 +33,16 @@ final class OrderProcessor implements Components.OrderProcessor, Components.Inve
 
 	@Override
 	public long vat(long grossValue) {
-		return 0;
+		return (long)((double)grossValue * 0.1597);
 	}
 
 	@Override
 	public long vat(long grossValue, int rateIndex) {
+		if(rateIndex == 1) {
+			return vat(grossValue);
+		} else if(rateIndex == 2){
+			return (long)((double)grossValue * 0.6542);
+		} else
 		return 0;
 	}
 
