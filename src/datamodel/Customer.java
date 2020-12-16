@@ -2,11 +2,11 @@ package datamodel;
 
 public class Customer {
 
-	protected final String id;
-	protected String firstName;
-	protected String lastName;
-	protected String name;
-	protected String contact;
+	private final String id;
+	private String firstName;
+	private String lastName;
+	private String name;
+	private String contact;
 
 	protected Customer(String id, String name, String contact) {
 		this.id = id;

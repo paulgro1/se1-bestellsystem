@@ -6,10 +6,10 @@ import java.util.List;
 
 public class Order {
 
-	protected final long id;
-	protected final Date date;
-	protected final Customer customer;
-	protected final List<OrderItem> items = new ArrayList<OrderItem>();
+	private final long id;
+	private final Date date;
+	private final Customer customer;
+	private final List<OrderItem> items = new ArrayList<OrderItem>();
 
 	protected Order(long id, Date date, Customer customer) {
 		this.id = id;

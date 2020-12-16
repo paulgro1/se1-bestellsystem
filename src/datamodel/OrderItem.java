@@ -2,9 +2,9 @@ package datamodel;
 
 public class OrderItem {
 
-	protected String description;
-	protected final Article article;
-	protected int unitsOrdered;
+	private String description;
+	private final Article article;
+	private int unitsOrdered;
 
 	protected OrderItem(String description, Article article, int unitsOrdered) {
 		this.description = description;
