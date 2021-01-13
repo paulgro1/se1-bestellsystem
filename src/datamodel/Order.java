@@ -13,21 +13,33 @@ public class Order {
 
 	protected Order(long id, Date date, Customer customer) {
 		this.id = id;
-		this.date = date;
+
+		if (date == null) {
+			this.date = new Date();
+		} else {
+			this.date = date;
+		}
+
 		this.customer = customer;
 	}
 
 	// Methoden
 
 	public int count() {
-		int count = 0;
-		count++;
-		return count;
+		if (items.isEmpty() || items == null) {
+			return 0;
+		} else {
+			return items.size();
+		}
 	}
 
 	public Order addItem(OrderItem item) {
-		this.items.add(item);
-		return this;
+		if (items.contains(item) || item == null) {
+			return this;
+		} else {
+			this.items.add(item);
+			return this;
+		}
 	}
 
 	public Order removeItem(OrderItem item) {

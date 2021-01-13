@@ -7,9 +7,9 @@ public class OrderItem {
 	private int unitsOrdered;
 
 	protected OrderItem(String description, Article article, int unitsOrdered) {
-		this.description = description;
+		setDescription(description);
 		this.article = article;
-		this.unitsOrdered = unitsOrdered;
+		setUnitsOrdered(unitsOrdered);
 	}
 
 	// Getter & Setter Methoden
@@ -19,7 +19,11 @@ public class OrderItem {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		if (description == null || description.equals("")) {
+			this.description = "";
+		} else {
+			this.description = description;
+		}
 	}
 
 	public int getUnitsOrdered() {
@@ -27,7 +31,11 @@ public class OrderItem {
 	}
 
 	public void setUnitsOrdered(int unitsOrdered) {
+		if(unitsOrdered < 0) {
+			this.unitsOrdered = 0;
+		} else {
 		this.unitsOrdered = unitsOrdered;
+		}
 	}
 
 	public Article getArticle() {
